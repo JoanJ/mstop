@@ -122,5 +122,5 @@ func main() {
 	}
 
 	//show, err := conn.Query(SELECT resource_database_id, request_type, request_status, request_lifetime, request_session_id, request_owner_id FROM sys.dm_tran_locks WHERE resource_database_id = DB_ID() AND resource_associated_entity_id = OBJECT_ID(N'dbo.$TABLE_NAME'))
-	*/
+	
 }
