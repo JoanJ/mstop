@@ -58,6 +58,7 @@ func connection() {
 		log.Fatal("Open connection failed:", err.Error())
 	}
 	defer conn.Close()
+	return &conn
 }
 
 func main() {
