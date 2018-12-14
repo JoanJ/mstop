@@ -84,6 +84,7 @@ func main() {
 		log.Fatal("Open connection failed:", err.Error())
 	}
 	defer conn.Close()
+
 	//flag.Parse()
 
 	/*if *debug {
@@ -93,13 +94,6 @@ func main() {
 		fmt.Printf(" user:%s\n", *user)
 	}*/
 	//QUERIES
-
-	//show, err := conn.Query(SELECT resource_database_id, request_type, request_status, request_lifetime, request_session_id, request_owner_id FROM sys.dm_tran_locks WHERE resource_database_id = DB_ID() AND resource_associated_entity_id = OBJECT_ID(N'dbo.$TABLE_NAME'))
-
-}
-
-func keries() {
-
 	showDB, err := conn.Query("SELECT name FROM master.sys.databases where database_id > '5'")
 	if err != nil {
 		log.Fatal("Query show failed:", err.Error())
@@ -147,4 +141,6 @@ func keries() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	//show, err := conn.Query(SELECT resource_database_id, request_type, request_status, request_lifetime, request_session_id, request_owner_id FROM sys.dm_tran_locks WHERE resource_database_id = DB_ID() AND resource_associated_entity_id = OBJECT_ID(N'dbo.$TABLE_NAME'))
+
 }
