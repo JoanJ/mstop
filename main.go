@@ -15,7 +15,6 @@ import (
 )
 
 // configuration
-
 type configuracio struct {
 	P        string `yaml:"p"`
 	Virginia struct {
