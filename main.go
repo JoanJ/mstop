@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	_ "github.com/denisenkom/go-mssqldb"
+	"github.com/olekukonko/tablewriter"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -55,11 +56,11 @@ func connectionString(a string) string {
 	t := strings.TrimSpace(a)
 	if t == "I" {
 		connString = fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d", c.Irlanda.Db, c.Irlanda.User, password, port)
-		fmt.Printf(" connString:%s\n", connString)
+		//fmt.Printf(" connString:%s\n", connString)
 	}
 	if t == "V" {
 		connString = fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d", c.Virginia.Db, c.Virginia.User, password, port)
-		fmt.Printf(" connString:%s\n", connString)
+		//fmt.Printf(" connString:%s\n", connString)
 	}
 	//CONN
 
@@ -113,7 +114,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(name)
+		fmt.Println(name)
 	}
 
 	for lockDB.Next() {
@@ -121,7 +122,7 @@ func main() {
 			text          string
 			datab         string
 			username      string
-			sessionID     int
+			sessionID     string
 			requestStatus string
 			commanda      string
 			blocksession  string
@@ -135,8 +136,21 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(datab, username, sessionID, requestStatus, commanda, waitTime)
+		fmt.Println(datab, username, sessionID, requestStatus, commanda, waitTime)
+
+		lockData := [][]string{
+			[]string{datab, username, sessionID, requestStatus, commanda, waitTime},
+		}
+
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"DataBase", "Usuari", "Sessio ID", "Request Status", "Commanda", "Wait Time"})
+
+		for _, v := range lockData {
+			table.Append(v)
+		}
+		table.Render()
 	}
+
 	err = lockDB.Err()
 	if err != nil {
 		log.Fatal(err)
